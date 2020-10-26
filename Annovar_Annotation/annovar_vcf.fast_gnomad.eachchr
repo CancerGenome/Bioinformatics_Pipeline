@@ -1,0 +1,32 @@
+#!/bin/bash
+if [ $# -le 0 ] 
+then echo "
+#########################################################################
+#      USAGE: fast_annovar.sh <Input.vcf.gz> <INPUT VCF File> <Chr Name>
+#      Description: Only VCF.GZ file is accepted here. If you are not faimiliar with GZIP file, please search bcftools and BGZIP.
+#      Version Note: V2: use annotate, rather than merge to combine the annotation file and origianl vcf
+#      Version Note: after running each chromosome, should concat each chromosome together, then re-do annotation -> concat.sh
+#                  
+#      Author: Wang Yu
+#      Mail: yulywang __AT__ umich.edu
+#      Created Time: Mon 28 Jan 2019 03:31:51 PM EST
+#########################################################################
+"
+exit
+fi
+
+#---- Prepare the required list and input file
+bcftools annotate -x INFO -Oz -o $1.$2.tmp.vcf.gz $1 -r $2
+# Run Annovar here, input your own command line
+annovar_vcf $1.$2.tmp.vcf.gz
+bgzip $1.$2.tmp.vcf.gz.hg19_multianno.vcf; 
+bcftools index -t $1.$2.tmp.vcf.gz.hg19_multianno.vcf.gz
+#bcftools index -t $1
+#bcftools annotate -a $1.$2.tmp.vcf.gz.hg19_multianno.vcf.gz -c INFO $1 2>err -Oz -o $1.hg19_annovar.vcf.gz
+#bcftools index -t $1.hg19_annovar.vcf.gz
+#---- Clean all remaining files
+rm $1.$2.tmp.vcf.gz.avinput 
+rm $1.$2.tmp.vcf.gz
+rm $1.$2.tmp.vcf.gz.hg19_multianno.txt
+
+#bcftools annotate -a $1.$2.tmp.vcf.gz.hg19_multianno.vcf.gz -c INFO $1 2>err -Oz -o $1.hg19_annovar.vcf.gz
