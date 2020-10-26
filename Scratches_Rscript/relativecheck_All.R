@@ -1,0 +1,5 @@
+#a <- read.table("FMD.0.98.genome.0.2",header=T)
+a <- read.table("FMD.0.98.genome",header=T)
+pdf("Relative_Check_All.pdf",width = 10)
+plot(jitter(a$Z2, amount = 0 )~ jitter(a$Z1,amount = 0 ), pch = 4, col = adjustcolor("red",alpha.f = 0.5), main = "Relative Check (PIHAT>=0)", xlab ="Z1, (IBD=1)% + random noise", ylab ="Z2, (IBD=2)% + random noise")
+dev.off()

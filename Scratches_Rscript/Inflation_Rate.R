@@ -1,0 +1,5 @@
+args <- commandArgs(trailingOnly = TRUE)
+a <- read.table(args, header = T, comment.char ="!")
+#a <- read.table("LOF_Nonsyn_0.05/collapse/collapse.epacts" , header = T, comment.char ="!")
+chisq <- qchisq(1- a$PVALUE, 1)
+print (median(chisq,na.rm=T)/qchisq(0.5,1))

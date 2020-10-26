@@ -1,0 +1,7 @@
+args <- commandArgs(trailingOnly = TRUE)
+a <- read.table(paste(args[1]))
+source("~/bin/R_declare.R")
+b=apply(a,1,calcfisher2)
+c=cbind(a,b)
+output = paste(args,"FisherOut",sep=".")
+write.table(c,file=output, col.names=F, row.names = F, quote=F, sep ="\t")
