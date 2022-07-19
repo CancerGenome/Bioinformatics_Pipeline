@@ -1,4 +1,4 @@
-# fast_annovar
+# fast_annovar1
 I am writing my solution on fast Annovar annotation. You can choose to use this solution if:
 1) You have so many samples in VCF file;
 2) You spend a long time to wait Annovar result and hope to have a quicker solution here. 
