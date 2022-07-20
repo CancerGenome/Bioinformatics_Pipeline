@@ -1,2 +1,3 @@
 # Bioinformatics_Pipeline 
-All pipelines are created and used by Yu Wang in daily work. 
+- This repo includes all regular pipeline used by Yu Wang in daily work.
+
