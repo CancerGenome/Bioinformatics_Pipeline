@@ -28,7 +28,7 @@ https://www.genenames.org/
 
 ## Files in the db folder
 
-##### omim.gene.txt: 
+- omim.gene.txt: 
 Originallly download from OMIM: https://www.omim.org/static/omim/data/mim2gene.txt
 
 Command line to process this file
@@ -37,7 +37,7 @@ Command line to process this file
 
 > awk '$2=="gene"' mim2gene.txt | awk '!a[$4]++' | awk 'BEGIN{print "OMIM\tType\tEntrezeID\tSymbol\tEnsemble"}{print $0}'> omim.gene.txt
 
-##### gene_name: 
+- gene_name: 
 Originally download from NCBI: https://ftp.ncbi.nih.gov/gene/DATA/GENE_INFO/Mammalia/Homo_sapiens.gene_info.gz
 
 Unzip the file and cut only Gene and description 
