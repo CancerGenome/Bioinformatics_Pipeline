@@ -30,6 +30,7 @@ Please change your reference files and bed file if analyzing your own data
 
 - Concat all Varscan Output together
 > head -n1 FASTQ/somatic/NTC.snp > Header2
+
 > grep Somatic FASTQ/somatic/*snp | sort -k11g,11 | cat Header2 - | sed 's/\%//g' > Somatic.SNP
 
 - Any variants with two occurence will be treated as Recurrent Variants
