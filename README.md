@@ -1,6 +1,6 @@
 # Bioinformatics_Pipeline 
 
-This repo includes all regular pipeline used by Yu Wang in daily work. 
+This repo includes all regular pipeline used in daily work. 
 
 - Annovar_Annotation: Annotate VCF files with Annovar, output gnomAD frequency, gene annotation, Software prediction
 - GATK_RNASeq_SNVCalling: SNV calling with GATK4, for RNASeq data

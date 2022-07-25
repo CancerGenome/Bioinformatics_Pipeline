@@ -1,0 +1,8 @@
+#!/bin/bash
+reference='/home/yulywang/db/human/hs37d5.fa'
+normal_bam=$1
+tumor_bam=$2
+prefix=$3
+normal_pileup="samtools mpileup -q 1 -f $reference -l /home/yulywang/db/list/MIPS_Somatic_40K_2bp_extend.bed $normal_bam";
+tumor_pileup="samtools mpileup -q 1 -f $reference  -l /home/yulywang/db/list/MIPS_Somatic_40K_2bp_extend.bed $tumor_bam";
+java -jar /home/yulywang/bin/VarScan.v2.4.4.jar somatic <($normal_pileup) <($tumor_pileup) $prefix --min-var-freq 0.01 --validation 0
