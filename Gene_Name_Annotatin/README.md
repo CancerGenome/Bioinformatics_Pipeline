@@ -18,6 +18,7 @@ with
 ## Output
 
 Detailed Version Output: All columns listed above
+
 Lite Version Output: Selected columns from detailed version
 
 ## Caveat
@@ -29,13 +30,16 @@ https://www.genenames.org/
 
 ##### omim.gene.txt: 
 Originallly download from OMIM: https://www.omim.org/static/omim/data/mim2gene.txt
+
 Command line to process this file
 
 > wget https://www.omim.org/static/omim/data/mim2gene.txt
+
 > awk '$2=="gene"' mim2gene.txt | awk '!a[$4]++' | awk 'BEGIN{print "OMIM\tType\tEntrezeID\tSymbol\tEnsemble"}{print $0}'> omim.gene.txt
 
 ##### gene_name: 
 Originally download from NCBI: https://ftp.ncbi.nih.gov/gene/DATA/GENE_INFO/Mammalia/Homo_sapiens.gene_info.gz
+
 Unzip the file and cut only Gene and description 
 
 If you want to update both files, make sure the file names and header are identical with previous version
