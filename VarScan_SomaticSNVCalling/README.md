@@ -23,7 +23,8 @@ Mapped to genome with BWA
 - If you want to generate all above steps in one command line, use
 > perl S1.bwa.pl BAM_LIST
 
-Where BAM_LIST includes your FULL PATH BAM FILE, one line for each BAM.
+Where BAM_LIST format is: FULL PATH BAM, one line each. 
+Please replace /home/yulywang/db/human/hs37d5 and /home/yulywang/db/human/hs37d5.fai with your own reference index and index fai.
 
 ## Step 2: S2.Varscan.sh
 - Call Somatic Variants with your processed Normal and Tumor BAM files;
@@ -31,7 +32,7 @@ Where BAM_LIST includes your FULL PATH BAM FILE, one line for each BAM.
 
 Please change your reference files and bed file if analyzing your own data
 
-## Step 3:S3.Filter.sh
+## Step 3: S3.Filter.sh
 
 - Concat all Varscan Output together
 > head -n1 FASTQ/somatic/NTC.snp > Header2

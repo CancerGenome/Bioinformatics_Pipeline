@@ -1,0 +1,1 @@
+fastPHASE OUTPUT.inp
