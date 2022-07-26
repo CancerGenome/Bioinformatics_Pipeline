@@ -1,6 +1,6 @@
 # Bioinformatics_Pipeline 
 
-This repo includes all regular pipeline used in daily work. 
+This repo includes all regular pipeline used in daily work. Please leave me an issue if you have any questions. I will solved it ASAP.
 
 - Annovar_Annotation: Annotate VCF files with Annovar, output gnomAD frequency, gene annotation, Software prediction
 - GATK_RNASeq_SNVCalling: SNV calling with GATK4, for RNASeq data

@@ -32,7 +32,7 @@ Caveat: Annovar can handle several type of files, where we only discuss VCF here
 
 Please replace table_annovar.pl with the Full Path of your table_annovar.pl. Also replace the directory of your humandb from Annovar. 
 
-> table_annovar.pl $1 Dir_to_annovar_humandb_folder -buildver hg19 -out $1 -remove -protocol refGene,ensGene,cytoBand,genomicSuperDups,snp129,avsnp150,popfreq_all_20150413,gnomad_exome,gnomad_genome,UMD,dbnsfp35a,intervar_20180118,clinvar_20180603 -operation g,g,r,r,f,f,f,f,f,f,f,f,f -nastring . -vcfinput 
+> table_annovar.pl INPUT Dir_to_annovar_humandb_folder -buildver hg19 -out OUTPUT -remove -protocol refGene,ensGene,cytoBand,genomicSuperDups,snp129,avsnp150,popfreq_all_20150413,gnomad_exome,gnomad_genome,UMD,dbnsfp35a,intervar_20180118,clinvar_20180603 -operation g,g,r,r,f,f,f,f,f,f,f,f,f -nastring . -vcfinput 
 
 ## Step 3: Convert OUTPUT to human-readable file
 
@@ -47,6 +47,7 @@ In the example folder, I copied the key scripts of Annovar and show you how to r
 Go to db folder:
 
 > unzip  hg19_refGeneMrna.fa.gz
+
 > unzip hg19_refGene.txt.gz
 
 Run this command line: 
