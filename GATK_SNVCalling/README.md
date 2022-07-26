@@ -1,3 +1,7 @@
+# Caveat
+
+  This README is a lite version. If you want to see more details on each command line, please go to Doc folder
+
 # Introduction
 - All data were aligned to reference genome GRCh37 (hg19) with bwa 0.7.17 mem. <br>
 - We followed the GATK (4.0.5.1) SNV calling best practices (https://gatk.broadinstitute.org/hc/en-us/articles/360035535932-Germline-short-variant-discovery-SNPs-Indels-) and only two parameters were changed to accommodate computational resources (--max_records_in_ram and --max-reads-per-alignment-start). <br>
@@ -30,20 +34,6 @@ Input for mapping here is FASTQ. If your input is BAM file, please go to https:/
 Where BAM_LIST format is: FULL PATH BAM, one line each. 
 Please replace /home/yulywang/db/human/hs37d5 and /home/yulywang/db/human/hs37d5.fai with your own reference index and index fai.
 
-Breakdown for S1.bwa.sh steps:
-
-- Map with BWA, you should replace with your own index file for hs37d5
-> bwa7.17 mem -R "@RG\tID:1200C\tPL:Illumina\tLB:1200C\tDS:pe::0\tDT:2021-06-02\tSM:1200C\tCN:U_Michigan_YuWang_Ganesh_Lab" -t 4 -k 20 -w 105 -d 105 -r 1.3 -c 12000 -A 1 -B 4 -O 6 -E 1 -L 6 -U 18 /home/yulywang/db/human/hs37d5 TEST_R1.fastq.gz TEST_R2.fastq.gz | gzip -3 > TEST.sam.gz
-
-- Convert SAM to BAM, replace your own index.fai file
-> gzip -dc TEST.sam.gz | samtools view --threads 4 -b1ht /home/yulywang/db/human/hs37d5.fa.fai - > TEST.unsort.bam;
-
-- Sort and index BAM files 
-> samtools sort -m 1600M --threads 4 -O BAM -o TEST.sort.bam TEST.unsort.bam;samtools index TEST.sort.bam;
-
-- Clean up everythings
-> rm TEST.sortid.bam; rm TEST.sam.gz; rm TEST.unsort.bam; 
-
 ### Step 2, Mark Duplicaton with Picard, S2.picard.sh
 
 Run picard to label duplication.
@@ -71,27 +61,6 @@ After all samples have their own GVCF files, combine GVCF for each 30M, concat t
 > ./GATK_CombineGVCF_Merge_GenotypeGVCF_HardFilter_Annovar.pl -l GVCF.list > S5_8_CombineGVCF_Merge_GenotypeGVCF_HardFilter_Annovar.sh
 
 > sh GATK_CombineGVCF_Merge_GenotypeGVCF_HardFilter_Annovar.sh
-
-Breakdown for each step details:
-
-- Step Five: CombineGVCF by each chrosome 30M, Input: all g.vcf.gz. Because the sample size is always big, try too analyze only 30M intervals each time. The PERL script above will generate the whole genome with 30M internals. 
-
-> gatk4.0.5 CombineGVCFs -R /home/yulywang/db/human/hs37d5.fa  -V /home/yulywang/1.g.vcf.gz  -V /home/yulywang/2.g.vcf.gz  -O ../CombineGVCF/1_1_30000000.g.vcf.gz -L 1:1-30000000 ; 
-
-- Step Six: GenotypeGVCF on each chromosome 30M
-> gatk4.0.5 GenotypeGVCFs -R /home/yulywang/db/human/hs37d5.fa --dbsnp /home/yulywang/db/dbsnp/dbsnp_138.hg19.excluding_sites_after_129.vcf.gz -V  ../CombineGVCF/1_1_30000000.g.vcf.gz -O ../GenotypeGVCF/1_1_30000000.vcf.gz -L 1:1-30000000 ; 
-
-- Step Seven: Variant Calibration Hard Filter;
- Hard Filter: 
-        SNPs:
-		-filter QD < 5.0 -filter QUAL < 50.0 --cluster-size 3  --cluster-window-size 10
-	-filter SOR > 3.0 -filter FS > 60.0 -filter MQ < 40.0 -filter MQRankSum <-12.5 -filter ReadPosRankSum < -8.0
-	     INDELS:
-		-filter QD < 5.0 -filter QUAL < 50.0 --cluster-size 3  --cluster-window-size 10
-		-filter FS > 60.0 -filter ReadPosRankSum < -20.0
-
-- Step Eight: Annovar annotation 
-> GATK_HardFilter_Annovar.sh ../GenotypeGVCF/1_1_30000000.vcf.gz ../GenotypeGVCF/1_1_30000000.vcf.gz 
 
 ### Step 9 Concat all together.
 

@@ -1,7 +1,3 @@
-## Caveat:
-
-  This README is a lite version. If you want to see more details on each command line, please go to Doc folder
-
 ## Introdcution
 
 Pipeline used for VarScan Somatic Variants detections
@@ -20,6 +16,23 @@ Assume you have downloaded the reference and created the index file. If not, use
 
 Where BAM_LIST format is: FULL PATH BAM, one line each. 
 Please replace /home/yulywang/db/human/hs37d5 and /home/yulywang/db/human/hs37d5.fai with your own reference index and index fai.
+
+Breakdown for S1.bwa.sh steps:
+
+- Assume the input file BAM file and name is TEST.bam, your should sort the id first for mapping purpose
+> samtools sort -m 1600M --threads 4 -n -O BAM -o TEST.sortid.bam TEST.bam;
+
+- Convert BAM to FASTQ, apply bwa with parameters below, you should replace with your own index file after -p
+> samtools fastq TEST.sortid.bam | bwa7.17 mem -R "@RG\tID:AD-0057\tPL:Illumina\tLB:AD-0057\tDS:pe::0\tDT:2022-05-01\tSM:AD-0057\tCN:University_of_Michigan_Ganesh_Lab_YuWang" -t 4 -k 20 -w 105 -d 105 -r 1.3 -c 12000 -A 1 -B 4 -O 6 -E 1 -L 6 -U 18 -p /home/yulywang/db/human/hs37d5 - | gzip -3 > TEST.sam.gz;
+
+- Convert SAM to BAM, replace your own index.fai file
+> gzip -dc TEST.sam.gz | samtools view --threads 4 -b1ht /home/yulywang/db/human/hs37d5.fa.fai - > TEST.unsort.bam;
+
+- Sort and index BAM files 
+> samtools sort -m 1600M --threads 4 -O BAM -o TEST.sort.bam TEST.unsort.bam;samtools index TEST.sort.bam;
+
+- Clean up everythings
+> rm TEST.sortid.bam; rm TEST.sam.gz; rm TEST.unsort.bam; 
 
 ## Step 2: S2.Varscan.sh
 - Call Somatic Variants with your processed Normal and Tumor BAM files;
