@@ -1,2 +1,0 @@
-#!/bin/bash
-~/bin/tar/annovar/table_annovar.pl $1 ~/bin/tar/annovar/humandb/ -buildver hg19 -out $1 -remove -protocol refGene,snp129,snp142,1000g2015aug_all,popfreq_all_20150413,dbnsfp30a -operation g,f,f,f,f,f -nastring . # 06/19/2018

@@ -1,0 +1,8 @@
+#########################################################################
+# File Name: /home/wangyu/bin/annovar.sh
+# Author: WangYu wangyu.bgi@gmail.com
+# Only ref gene annotation
+# Created Time: Tue Aug 26 16:29:37 2014
+#########################################################################
+#!/bin/bash
+~/bin/tar/annovar/table_annovar.pl $1 ~/bin/tar/annovar/humandb/ -buildver hg19 -out $1 -remove -protocol refGene -operation g -nastring . -vcfinput #for santhi project 180119
