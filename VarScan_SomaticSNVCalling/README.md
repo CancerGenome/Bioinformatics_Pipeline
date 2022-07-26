@@ -20,6 +20,11 @@ Mapped to genome with BWA
 - Clean up everythings
 > rm TEST.sortid.bam; rm TEST.sam.gz; rm TEST.unsort.bam; 
 
+- If you want to generate all above steps in one command line, use
+> perl S1.bwa.pl BAM_LIST
+
+Where BAM_LIST includes your FULL PATH BAM FILE, one line for each BAM.
+
 ## Step 2: S2.Varscan.sh
 - Call Somatic Variants with your processed Normal and Tumor BAM files;
 > VarScan_Somatic_MIPS Normal.bam Tumor.bam Tumor.bam
