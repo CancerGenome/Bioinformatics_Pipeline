@@ -3,7 +3,21 @@
 Pipeline used for VarScan Somatic Variants detections
 
 ## Step 1: S1.bwa.sh
-Mapped to genome with BWA 
+
+Mapped to genome with BWA
+
+Assume you have downloaded the reference and created the index file. If not, use bwa index YOUR_REFERENCE_FASTA_FILE and find more details here: http://bio-bwa.sourceforge.net/bwa.shtml
+
+- One Step to generate the BWA running shell.
+
+> perl S1.bwa.pl BAM_LIST > S1.bwa.sh
+
+> sh S1.bwa.sh 
+
+Where BAM_LIST format is: FULL PATH BAM, one line each. 
+Please replace /home/yulywang/db/human/hs37d5 and /home/yulywang/db/human/hs37d5.fai with your own reference index and index fai.
+
+Breakdown for S1.bwa.sh steps:
 
 - Assume the input file BAM file and name is TEST.bam, your should sort the id first for mapping purpose
 > samtools sort -m 1600M --threads 4 -n -O BAM -o TEST.sortid.bam TEST.bam;
@@ -19,12 +33,6 @@ Mapped to genome with BWA
 
 - Clean up everythings
 > rm TEST.sortid.bam; rm TEST.sam.gz; rm TEST.unsort.bam; 
-
-- If you want to generate all above steps in one command line, use
-> perl S1.bwa.pl BAM_LIST
-
-Where BAM_LIST format is: FULL PATH BAM, one line each. 
-Please replace /home/yulywang/db/human/hs37d5 and /home/yulywang/db/human/hs37d5.fai with your own reference index and index fai.
 
 ## Step 2: S2.Varscan.sh
 - Call Somatic Variants with your processed Normal and Tumor BAM files;

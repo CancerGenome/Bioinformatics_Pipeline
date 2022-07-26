@@ -37,9 +37,6 @@ while(my $input = <>){
 	#print "$gz1\t$gz2\t$prefix\n";
 
 	my $header = "\@RG\\tID:$prefix\\tPL:Illumina\\tLB:$prefix\\tDS:pe::0\\tDT:2021-06-02\\tSM:$prefix\\tCN:U_Michigan_YuWang_Ganesh_Lab";
-	#$header = join("\\t",@H)."\\tDT:2018-06-08\\tSM:$prefix\\tCN:University_of_Michigan_Ganesh_Lab";
-	#print "samtools sort -m 1600M --threads 4 -n -O BAM -o $prefix.sortid.bam $input;";
-	#print " samtools fastq $prefix.sortid.bam | bwa7.17 mem -R \"$header\" -t 4 -k 20 -w 105 -d 105 -r 1.3 -c 12000 -A 1 -B 4 -O 6 -E 1 -L 6 -U 18 -p /home/yulywang/db/human/hs37d5 -| gzip -3 > $prefix.sam.gz;";
 
 	$prefix = $dir."/".$prefix; # update prefix to full path
 	print "bwa7.17 mem -R \"$header\" -t 4 -k 20 -w 105 -d 105 -r 1.3 -c 12000 -A 1 -B 4 -O 6 -E 1 -L 6 -U 18 /home/yulywang/db/human/hs37d5 $gz1 $gz2 | gzip -3 > $prefix.sam.gz; "; # bwa mem -p is disable
