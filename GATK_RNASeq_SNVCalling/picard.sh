@@ -17,10 +17,6 @@ bam=$1
 prefix=$2
 echo $prefix\.rmdup.bam
 
-# Specifical design for wrong header file from STAR , will not use this next time
-#samtools view -H $bam | change_header.pl - | samtools reheader - $bam > $prefix.newheader.bam
-#samtools view -H $bam | change_header.pl -  | samtools reheader - $bam | samtools view -h | sed 's/\\tSM/ SM/' | samtools view -b > $prefix.newheader.bam
-
 java -jar ~/bin/picard.jar \
     MarkDuplicates I=$bam \
     O=$prefix\.rmdup.bam \
