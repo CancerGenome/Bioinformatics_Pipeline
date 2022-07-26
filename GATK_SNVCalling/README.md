@@ -1,6 +1,7 @@
 # Caveat
 
   This README is a lite version. If you want to see more details on each command line, please go to Doc folder
+  Please also read carefully for the GATK best practices mannual.
 
 # Introduction
 - All data were aligned to reference genome GRCh37 (hg19) with bwa 0.7.17 mem. <br>
