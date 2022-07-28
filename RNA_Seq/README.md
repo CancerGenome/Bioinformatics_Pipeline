@@ -23,7 +23,7 @@ Then you need to combine all RSEM output together. The results for next step is 
 
 > rsem-generate-data-matrix 1.genes.results 2.genes.results  > RSEM_transcript.genes.result
 
-#### Step 4: Apply DEG analysis with DESeq2
+### Step 4: Apply DEG analysis with DESeq2
 
 Included is an example for Different expression analysis. The detailed mannual for DESeq2 is strongly suggested before running any analysis: http://bioconductor.org/packages/devel/bioc/vignettes/DESeq2/inst/doc/DESeq2.html
 
@@ -42,6 +42,7 @@ Goal of enrichment analysis:
 - Find relationship between genes
 
 Two strategy: 
+
 DAVID: Use a subset of genes and check if these are functionally enriched
 
 - Over-representation analysis (ORA), for example different express gene (DE)
