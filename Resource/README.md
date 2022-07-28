@@ -1,6 +1,6 @@
 ## Introduction
 
-The document contains all useful resources for lab. 
+The document contains all useful resources for lab.  YW also uploaded one copy to dropbox, with more details. Link: https://www.dropbox.com/sh/zcw8mscivj49rdd/AACBhLymPG5CWmUKlX3fh4DKa?dl=0
 
 ## Computational Resource
 

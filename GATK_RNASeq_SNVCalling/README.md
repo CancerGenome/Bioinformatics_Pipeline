@@ -2,6 +2,20 @@
 
 Call SNV from RNASeq data. Originally from GATK best practice
 
+## Layout of your folder:
+- Pipeline: for all your pipeline
+- FASTQ: for all you raw FASTQ files and all following BAM files;
+- CombineGVCF: temporay folder for CombineGVCF 
+- GenotypeGVCF: temporay folder for GenotypeGVCF
+- Final_VCF:  Final_VCF folder
+
+## Prepare
+
+Create new folder that are going to use. 
+
+All useful scripts are located in src folder. Please include the full path src first OR export $PATH=$PATH:./src
+
+
 ## Step 1: Mapping with STAR
 
 Please go to RNASeq folder for the mapping of STAR:
