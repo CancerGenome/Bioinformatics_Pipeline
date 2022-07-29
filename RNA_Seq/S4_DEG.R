@@ -48,33 +48,32 @@ sampledata <- read.csv("[Archive] Sample info for Ped Celline RNASeq - V1.csv", 
 sampledata$ADnumber = sampledata$ID
 str(sampledata)
 
-sampledata$NF1 <- "other"
-sampledata$NF1[sampledata$Priotized_gene=="NF1"] <- "NF1"
-sampledata$NF1[grep("ADC",sampledata$ID)] <- "control"
+sampledata$GROUP1 <- "other"
+sampledata$GROUP1[sampledata$Priotized_gene=="GROUP1"] <- "GROUP1"
+sampledata$GROUP1[grep("ADC",sampledata$ID)] <- "control"
 
-sampledata$TRIM67 <- "other"
-sampledata$TRIM67[sampledata$Priotized_gene=="TRIM67"] <- "TRIM67"
-sampledata$TRIM67[grep("ADC",sampledata$ID)] <- "control"
+sampledata$GROUP2 <- "other"
+sampledata$GROUP2[sampledata$Priotized_gene=="GROUP2"] <- "GROUP2"
+sampledata$GROUP2[grep("ADC",sampledata$ID)] <- "control"
 
-sampledata$WS <- "other" # willian syndrom deletion
-sampledata$WS[sampledata$Priotized_gene=="7q11.23"] <- "WS"
-sampledata$WS[grep("ADC",sampledata$ID)] <- "control"
+sampledata$GROUP3 <- "other" # willian syndrom deletion
+sampledata$GROUP3[sampledata$Priotized_gene=="7q11.23"] <- "WS"
+sampledata$GROUP3[grep("ADC",sampledata$ID)] <- "control"
 
-sampledata$NF1 <- as.factor(sampledata$NF1)
-sampledata$TRIM67 <- as.factor(sampledata$TRIM67)
-sampledata$WS <- as.factor(sampledata$WS)
+sampledata$GROUP1 <- as.factor(sampledata$GROUP1)
+sampledata$GROUP2 <- as.factor(sampledata$GROUP2)
+sampledata$GROUP3 <- as.factor(sampledata$GROUP3)
 
 #make sure controls are ref groups for all variables
-levels(sampledata$NF1)
-levels(sampledata$WS)
-levels(sampledata$TRIM67)
+levels(sampledata$GROUP1)
+levels(sampledata$GROUP3)
+levels(sampledata$GROUP2)
 #sampledata$An <- relevel(sampledata$An, ref = "control")
 
 # Remove duplicated
 sampledata[sampledata$RmDup=="Y",]
 renalRM <- rownames(sampledata[sampledata$RmDup=="Y" & sampledata$tissue_group=="renal",])
 aoRM <- rownames(sampledata[sampledata$RmDup=="Y" & sampledata$tissue_group=="aorta",])
-
 
 #######################################################
 ####
@@ -83,7 +82,7 @@ aoRM <- rownames(sampledata[sampledata$RmDup=="Y" & sampledata$tissue_group=="ao
 
 ##### Filtering counts data ####
 # Be consistent with what IB defined, 
-# remove this when 9011_A is ready
+
 sampledata_filter <- sampledata[rownames(sampledata) %in% colnames(counts),]
 counts_filter <- counts[,rownames(sampledata)]
 all(colnames(counts_filter) == rownames(sampledata_filter))
@@ -133,41 +132,41 @@ dim(ddsNoRep)
 # [1] 19755    59
 
 ###Now create new group variables with phen and tissue info for analyses
-#NF1
-ddsNoRep$groupNF <- factor(paste(ddsNoRep$tissue_group, ddsNoRep$NF1, sep = "_"))
-# TRIM67
-ddsNoRep$groupTRIM67 <- factor(paste(ddsNoRep$tissue_group, ddsNoRep$TRIM67, sep ="_"))
+#GROUP1
+ddsNoRep$G1 <- factor(paste(ddsNoRep$tissue_group, ddsNoRep$GROUP1, sep = "_"))
+# GROUP2
+ddsNoRep$G2 <- factor(paste(ddsNoRep$tissue_group, ddsNoRep$GROUP2, sep ="_"))
 # WS
-ddsNoRep$groupWS <- factor(paste(ddsNoRep$tissue_group, ddsNoRep$WS, sep ="_"))
+ddsNoRep$G3 <- factor(paste(ddsNoRep$tissue_group, ddsNoRep$GROUP3, sep ="_"))
 
 save(ddsNoRep,file="DESeqDataSet_backup.Rdata") # only for Dataset backup
-# 1 Tissue specific NF1 DESeq model ########
+# 1 Tissue specific GROUP1 DESeq model ########
 
 #ddsNoRep$sex <- factor(ddsNoRep$sex)
 annotation$symbol = annotation$hgnc_symbol
 
 #### Caveat: use aorta as control ####
-#resNF1Renal <- run_DESEQ(ddsNoRep, formula = c("~groupNF + lane + sex"), annotation,
-resNF1Renal <- run_DESEQ(ddsNoRep, formula = c("~groupNF "), annotation, 
-                         contrast = c("groupNF","renal_NF1","aorta_control") )
+#resGROUP1Renal <- run_DESEQ(ddsNoRep, formula = c("~G1 + lane + sex"), annotation,
+resGROUP1Renal <- run_DESEQ(ddsNoRep, formula = c("~G1 "), annotation, 
+                         contrast = c("G1","renal_GROUP1","aorta_control") )
 
-# 4 Tissue specific TRIM67 DESeq model ######## 
-resTRIM67Renal <- run_DESEQ(ddsNoRep, formula = c("~groupTRIM67 "), annotation, 
-                            contrast = c("groupTRIM67","renal_TRIM67","aorta_control") )
+# 4 Tissue specific GROUP2 DESeq model ######## 
+resGROUP2Renal <- run_DESEQ(ddsNoRep, formula = c("~G2 "), annotation, 
+                            contrast = c("G2","renal_GROUP2","aorta_control") )
 
 # 6 Tissue specific WS_ELN DESeq model ######## 
-resWSRenal <- run_DESEQ(ddsNoRep, formula = c("~groupWS "), annotation, 
-                            contrast = c("groupWS","renal_WS","aorta_control") )
+resWSRenal <- run_DESEQ(ddsNoRep, formula = c("~G3 "), annotation, 
+                            contrast = c("G3","renal_GROUP3","aorta_control") )
 
-save(#resNF1Aorta, resNF1Renal, 
-  resNF1Renal,
-  resTRIM67Renal,
+save(#resGROUP1Aorta, resGROUP1Renal, 
+  resGROUP1Renal,
+  resGROUP2Renal,
   resWSRenal,
      file = "TissueSpecific_AnalysisResult_V1.RData")
 
-sheets <- list("NF1Renal"=resNF1Renal,
-               "TRIM67Renal"=resTRIM67Renal,
-               "WSRenal"=resWSRenal
+sheets <- list("GROUP1Renal"=resGROUP1Renal,
+               "GROUP2Renal"=resGROUP2Renal,
+               "WSRenal"=resGROUP3Renal
                )
 write_xlsx(sheets, "PedsCelllineRNASeq_DEG_TissueSpecific_V1.xlsx")
 
@@ -175,8 +174,8 @@ write_xlsx(sheets, "PedsCelllineRNASeq_DEG_TissueSpecific_V1.xlsx")
 
 filter = 10 # used for basemean filter
 # by genetic data
-r1 <- Volcano_YW(resNF1Renal, main = "NF1 Renal: 7 case vs 9 Aorta control",baseMeanFilter=filter) 
-r2 <- Volcano_YW(resTRIM67Renal, main = "TRIM67 Renal: 3 case vs 9 Aorta control",baseMeanFilter=filter)
+r1 <- Volcano_YW(resGROUP1Renal, main = "GROUP1 Renal: 7 case vs 9 Aorta control",baseMeanFilter=filter) 
+r2 <- Volcano_YW(resGROUP2Renal, main = "GROUP2 Renal: 3 case vs 9 Aorta control",baseMeanFilter=filter)
 r3 <- Volcano_YW(resWSRenal, main = "WS Renal: 3 case vs 9 Aorta control",baseMeanFilter=filter) 
 blank <- grid.rect(gp=gpar(col="white"))
 
@@ -187,8 +186,8 @@ dev.off()
 
 filter = 2 # used for basemean filter
 # by genetic data
-r1 <- Volcano_YW(resNF1Renal, main = "NF1 Renal: 7 case vs 9 Aorta control",baseMeanFilter=filter) 
-r2 <- Volcano_YW(resTRIM67Renal, main = "TRIM67 Renal: 3 case vs 9 Aorta control",baseMeanFilter=filter)
+r1 <- Volcano_YW(resGROUP1Renal, main = "GROUP1 Renal: 7 case vs 9 Aorta control",baseMeanFilter=filter) 
+r2 <- Volcano_YW(resGROUP2Renal, main = "GROUP2 Renal: 3 case vs 9 Aorta control",baseMeanFilter=filter)
 r3 <- Volcano_YW(resWSRenal, main = "WS Renal: 3 case vs 9 Aorta control",baseMeanFilter=filter) 
 blank <- grid.rect(gp=gpar(col="white"))
 pdf("TissueSpecific_VolcanoPlot_baseMeanFilter2_YW.pdf",width=16, height = 9)
