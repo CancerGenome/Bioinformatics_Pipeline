@@ -11,3 +11,5 @@ This repo includes all regular pipeline used in daily work. Please leave me an i
 - Scratch_scripts: PERL scripts for personal daily usage 
 - VarScan_SomaticSNVCalling: Somatic SNV calling for whole exome, whole genome, MIPS data
 - Haplotype Inference: Infer the haplotype with VCF file
+
+Last update: 08/01/2022
