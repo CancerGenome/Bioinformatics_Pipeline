@@ -1,0 +1,64 @@
+#!/usr/bin/perl -w
+sub usage (){
+    die qq(
+#===========================================================================
+#        USAGE:/home/junzli_lab/yulywang/bin/gaptrans.pl  -tr -s -n
+#              Try to convert \\s\\t to \\n, and replace \\s to _
+#
+#        DESCRIPTION: -h : Display this help
+#                     -t : table delim
+#                     -s : gap delim
+#                     -n : replace -t/-s with -n
+#                     -r : replace gap to _, combine with -t
+#                     -l : print all in one line, with table delim
+#        Author: Wang Yu
+#        mail: wangyu.bgi\@gmail.com
+#        Created Time:  Mon 08 Jun 2015 03:56:57 PM EDT
+#===========================================================================
+)
+}
+use strict;
+use warnings;
+use Getopt::Std;
+our ($opt_h,$opt_t,$opt_s,$opt_r,$opt_n,$opt_l);
+getopts("htsrnl");
+$ARGV[0] || &usage();
+&usage() if ($opt_h);
+
+open IN, "$ARGV[0]";
+while(my $line = <IN> ){
+	chomp $line;
+	my @split;
+	if ($opt_t){
+		@split = split/\t/,$line;
+	}
+	elsif($opt_s){
+		@split = split/\s+/,$line;
+	}
+	else{
+		@split = split/\s+/,$line;
+	}
+
+	if($opt_l){
+		print join("\t",@split),"\t";
+		next;
+	}
+	#print "\n$split[$#split]\n";
+	if($opt_r){
+		for my $i (0..$#split){
+			$split[$i] =~ s/\n//g;
+			$split[$i] =~ s/\r//g;
+			$split[$i]=~ s/\s+/_/g;
+			$split[$i]= "-" if ($split[$i] eq "");
+		}
+		#next;
+	}
+
+	if($opt_n){
+		print join("\n",@split),"\n";
+	}
+	else{
+		print join("\t",@split),"\n";
+	}
+}
+#print "\n";
