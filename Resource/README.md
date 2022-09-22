@@ -1,6 +1,6 @@
 ## Introduction
 
-The document contains all useful resources for lab. 
+The document contains all useful resources for lab.  YW also uploaded one copy to dropbox, with more details. Link: https://www.dropbox.com/sh/zcw8mscivj49rdd/AACBhLymPG5CWmUKlX3fh4DKa?dl=0
 
 ## Computational Resource
 
@@ -36,8 +36,8 @@ Four major storages:
 
 - Turbo: access with account Armis2, or use Globus, serach endpoint "UMich Arc Sensitive Turbo Volumn Collection", go to directory "/umms-sganesh-secure/"
 
-- Temporary folder:
+- Temporary folder: access with acount Armis2 only
 
-- Dataden: 
+- Dataden: Access with Globus only, search endpoint: "umich#flux", go to directory "/nfs/dataden/umms-sganesh/"
 
-- CSG: 
+- CSG: ssh/scp files

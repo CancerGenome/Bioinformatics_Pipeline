@@ -21,6 +21,8 @@
 
 Create new folder that are going to use. 
 
+All useful scripts are located in src folder. Please include the full path src first OR export $PATH=$PATH:./src
+
 ### Step 1, Mapping with BWA, S1.bwa.sh
 Assume you have downloaded the reference and created the index file. If not, use bwa index YOUR_REFERENCE_FASTA_FILE and find more details here: http://bio-bwa.sourceforge.net/bwa.shtml
 
@@ -28,7 +30,7 @@ Input for mapping here is FASTQ. If your input is BAM file, please go to https:/
 
 - One Step to generate the BWA running shell.
 
-> perl S1.bwa.pl BAM_LIST > S1.bwa.sh
+> S1.bwa.pl BAM_LIST > S1.bwa.sh
 
 > sh S1.bwa.sh 
 
@@ -59,7 +61,7 @@ After all samples have their own GVCF files, combine GVCF for each 30M, concat t
 
 > ls *.g.vcf.gz > GVCF.list
 
-> ./GATK_CombineGVCF_Merge_GenotypeGVCF_HardFilter_Annovar.pl -l GVCF.list > S5_8_CombineGVCF_Merge_GenotypeGVCF_HardFilter_Annovar.sh
+> GATK_CombineGVCF_Merge_GenotypeGVCF_HardFilter_Annovar.pl -l GVCF.list > S5_8_CombineGVCF_Merge_GenotypeGVCF_HardFilter_Annovar.sh
 
 > sh GATK_CombineGVCF_Merge_GenotypeGVCF_HardFilter_Annovar.sh
 
