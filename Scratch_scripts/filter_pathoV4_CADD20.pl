@@ -12,7 +12,7 @@ sub usage (){
 #		predicted by functional scores: SIFT, deleterious; Polyphen2 HDIV, deleterious or possibly
 #		damaging; Polyphen2 HVAR, deleterious or possibly damaging; LRT, deleterious;
 #		MutationTaster, deleterious; MutationAssessor, high or medium; FATHMM, deleterious;
-#		PROVEAN, deleterious; (3) CADD phred score greater than 25
+#		PROVEAN, deleterious; (3) CADD phred score greater than 20
 #
 #        Author: Wang Yu
 #        Mail: yulywang\@umich.edu
